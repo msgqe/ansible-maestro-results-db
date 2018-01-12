@@ -23,6 +23,10 @@ Role Variables
 | Name              | Default Value       | Description          |
 |-------------------|---------------------|----------------------|
 | `maestro_rdb_download_url` | null | Download URL |
+| `maestro_rdb_db_host` | null | Database host |
+| `maestro_rdb_db_host_port` | 3306 | Database port |
+| `maestro_rdb_db_user` | null | Database user |
+| `maestro_rdb_db_password` | null | Database password |
 
 
 Dependencies
