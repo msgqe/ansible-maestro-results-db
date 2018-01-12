@@ -1,0 +1,5 @@
+---
+- name: Install Maestro results db tool
+  tags:
+    - maestro
+  include: maestro_results_db.yml

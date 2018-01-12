@@ -1,0 +1,15 @@
+---
+# Maestro client user (note that it should be different than the one used by other modules)
+maestro_rdb_user: maestro
+
+maestro_rdb_download_url: "{{ lookup('env','MAESTRO_RDB_DOWNLOAD_URL') | default('', true) }}"
+maestro_rdb_install_dest: "/home/{{ maestro_rdb_user }}/"
+maestro_rdb_download_dest: /tmp/
+maestro_rdb_install_link: maestro-results-db
+maestro_rdb_skip_install: false
+maestro_rdb_log_dir: "{{ maestro_rdb_install_dest }}/log"
+
+maestro_rdb_db_host: localhost
+maestro_rdb_db_user: maestro
+maestro_rdb_db_password: maestro-dev
+

@@ -1,0 +1,10 @@
+---
+maestro_rdb_dependencies: java-1.8.0-openjdk-devel
+
+# vars file for ansible-maestro-client
+sdkman_dir: /opt/sdk
+sdkman_auto_answer: true
+sdkman_update: true
+sdkman_validate_ssl: false
+sdkman_install_packages:
+  - { candidate: groovy, version: 2.4.12 }
