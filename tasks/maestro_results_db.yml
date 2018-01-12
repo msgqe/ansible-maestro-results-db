@@ -84,7 +84,7 @@
     - configure
   template:
     src: templates/maestro-results.properties.j2
-    dest: "/home/{{ maestro_rdb_user }}/.maestro/maestro-results.properties.j2"
+    dest: "/home/{{ maestro_rdb_user }}/.maestro/maestro-results.properties"
     owner: "{{ maestro_rdb_user }}"
     group: "{{ maestro_rdb_user }}"
     mode: 0700
