@@ -1,3 +1,3 @@
-datasource.url=jdbc:mariadb://messaging-ci-dev.usersys.redhat.com:3306/maestro
-datasource.username=maestro
-datasource.password=maestro-dev
+datasource.url=jdbc:mariadb://{{ maestro_rdb_db_host }}:{{ maestro_rdb_db_host_port | default('3306') }}/maestro
+datasource.username={{ maestro_rdb_db_user }}
+datasource.password={{ maestro_rdb_db_password }}
