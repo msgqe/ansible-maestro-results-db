@@ -56,17 +56,6 @@
     group: "{{ maestro_rdb_user }}"
     force: true
 
-- name: Create log directory
-  tags:
-    - maestro
-    - logdir
-  file:
-    path: "{{ maestro_rdb_log_dir }}"
-    state: directory
-    owner: "{{ maestro_rdb_user }}"
-    group: "{{ maestro_rdb_user }}"
-    mode: 0755
-
 - name: Create user configuration directory
   tags:
     - maestro
