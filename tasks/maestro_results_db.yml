@@ -8,7 +8,7 @@
     - ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' or ansible_distribution == 'Fedora'
   package: name="{{ maestro_rdb_dependencies }}" state=present
 
-- name: Create Maestro client user
+- name: Create Maestro Results DB user
   tags:
     - maestro
     - user
@@ -17,7 +17,7 @@
 - debug:
     msg: "Going to download & use maestro from {{ maestro_rdb_download_url }}"
 
-- name: Download Maestro client from {{ maestro_rdb_download_url }}
+- name: Download Maestro Results DB client from {{ maestro_rdb_download_url }}
   tags:
     - maestro
     - download
@@ -43,7 +43,7 @@
   - maestro
   - link
 
-- name: Create link to maestro install dir {{ maestro_rdb_install_dest }}/{{ maestro_rdb_install_link }}
+- name: Create link to maestro results db install dir {{ maestro_rdb_install_dest }}/{{ maestro_rdb_install_link }}
   tags:
     - maestro
     - link
@@ -67,7 +67,7 @@
     group: "{{ maestro_rdb_user }}"
     mode: 0755
 
-- name: Configure maestro java DB access
+- name: Configure maestro results DB access
   tags:
     - maestro
     - configure
