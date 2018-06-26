@@ -2,6 +2,7 @@
 # Maestro client user (note that it should be different than the one used by other modules)
 maestro_rdb_user: maestro
 
+maestro_download_validate_certs: yes
 maestro_rdb_download_url: "{{ lookup('env','MAESTRO_RDB_DOWNLOAD_URL') | default('', true) }}"
 maestro_rdb_install_dest: "/home/{{ maestro_rdb_user }}/"
 maestro_rdb_download_dest: /tmp/
