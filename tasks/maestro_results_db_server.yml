@@ -1,0 +1,86 @@
+---
+# tasks file for ansible-maestro-java
+- name: Ensure that maestro client dependencies are installed (RPM-based)
+  tags:
+    - maestro
+    - dependencies
+  when:
+    - ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' or ansible_distribution == 'Fedora'
+  package: name="{{ maestro_rdb_server_dependencies }}" state=present
+
+- name: Create Maestro Results DB user
+  tags:
+    - maestro
+    - user
+  shell: id {{ maestro_rdb_user }} || (useradd -m -U {{ maestro_rdb_user }}  )
+
+- debug:
+    msg: "Going to download & use maestro from {{ maestro_rdb_server_download_url }}"
+
+- name: Download Maestro Results DB client from {{ maestro_rdb_server_download_url }}
+  tags:
+    - maestro
+    - download
+  get_url:
+    url: "{{ maestro_rdb_server_download_url }}"
+    dest: "{{ maestro_rdb_server_download_dest }}/{{ maestro_rdb_server_download_url | basename}}"
+    force: yes
+    validate_certs: "{{ maestro_download_validate_certs }}"
+  register: dist_get
+
+- name: Unzip downloaded distribution to {{ maestro_rdb_server_install_dest }}
+  tags:
+    - maestro
+    - unarchive
+  unarchive:
+    src: "{{ maestro_rdb_server_download_dest }}/{{ maestro_rdb_server_download_url | basename }}"
+    dest: "{{ maestro_rdb_server_install_dest }}/"
+    remote_src: True
+    list_files: yes
+  register: archive_contents
+
+- debug: msg="Latest maestro client directory created is {{ archive_contents.files[0] | dirname | dirname }}"
+  tags:
+  - maestro
+  - link
+
+- name: Create link to maestro results db install dir {{ maestro_rdb_server_install_dest }}/{{ maestro_rdb_server_install_link }}
+  tags:
+    - maestro
+    - link
+  file:
+    src: "{{ maestro_rdb_server_install_dest }}/{{ archive_contents.files[0] | dirname | dirname  }}"
+    dest: "{{ maestro_rdb_server_install_dest }}/{{ maestro_rdb_server_install_link }}"
+    state: link
+    mode: 0755
+    owner: "{{ maestro_rdb_user }}"
+    group: "{{ maestro_rdb_user }}"
+    force: true
+
+- name: Create user configuration directory
+  tags:
+    - maestro
+    - configure
+  file:
+    path: "/home/{{ maestro_rdb_user }}/.maestro"
+    state: directory
+    owner: "{{ maestro_rdb_user }}"
+    group: "{{ maestro_rdb_user }}"
+    mode: 0755
+
+- name: Configure maestro results DB access
+  tags:
+    - maestro
+    - configure
+  template:
+    src: templates/maestro-results.properties.j2
+    dest: "/home/{{ maestro_rdb_user }}/.maestro/maestro-results-server.properties"
+    owner: "{{ maestro_rdb_user }}"
+    group: "{{ maestro_rdb_user }}"
+    mode: 0700
+
+- name: Ensure correct ownership
+  tags:
+    - maestro
+    - ownership
+  shell: chown -R "{{ maestro_rdb_user }}":"{{ maestro_rdb_user }}" {{ maestro_rdb_server_install_dest }}/maestro*

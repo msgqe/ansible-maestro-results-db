@@ -9,6 +9,13 @@ maestro_rdb_cli_download_dest: /tmp/
 maestro_rdb_cli_install_link: maestro-results-db
 maestro_rdb_cli_skip_install: false
 
+
+maestro_rdb_server_download_url: "{{ lookup('env','MAESTRO_RDB_SERVER_DOWNLOAD_URL') | default('', true) }}"
+maestro_rdb_server_install_dest: "/home/{{ maestro_rdb_user }}/"
+maestro_rdb_server_download_dest: /tmp/
+maestro_rdb_server_install_link: maestro-results-db
+maestro_rdb_server_skip_install: false
+
 maestro_rdb_db_host: localhost
 maestro_rdb_db_host_port: 3306
 maestro_rdb_db_user: maestro
