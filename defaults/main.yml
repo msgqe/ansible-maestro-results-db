@@ -3,11 +3,11 @@
 maestro_rdb_user: maestro
 
 maestro_download_validate_certs: yes
-maestro_rdb_download_url: "{{ lookup('env','MAESTRO_RDB_DOWNLOAD_URL') | default('', true) }}"
-maestro_rdb_install_dest: "/home/{{ maestro_rdb_user }}/"
-maestro_rdb_download_dest: /tmp/
-maestro_rdb_install_link: maestro-results-db
-maestro_rdb_skip_install: false
+maestro_rdb_cli_download_url: "{{ lookup('env','MAESTRO_RDB_CLI_DOWNLOAD_URL') | default('', true) }}"
+maestro_rdb_cli_install_dest: "/home/{{ maestro_rdb_user }}/"
+maestro_rdb_cli_download_dest: /tmp/
+maestro_rdb_cli_install_link: maestro-results-db
+maestro_rdb_cli_skip_install: false
 
 maestro_rdb_db_host: localhost
 maestro_rdb_db_host_port: 3306

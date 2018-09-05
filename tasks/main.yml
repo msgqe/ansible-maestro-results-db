@@ -2,4 +2,4 @@
 - name: Install Maestro results db tool
   tags:
     - maestro
-  include: maestro_results_db.yml
+  include: maestro_results_db_cli.yml

@@ -6,7 +6,7 @@
     - dependencies
   when:
     - ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' or ansible_distribution == 'Fedora'
-  package: name="{{ maestro_rdb_dependencies }}" state=present
+  package: name="{{ maestro_rdb_cli_dependencies }}" state=present
 
 - name: Create Maestro Results DB user
   tags:
@@ -15,26 +15,26 @@
   shell: id {{ maestro_rdb_user }} || (useradd -m -U {{ maestro_rdb_user }}  )
 
 - debug:
-    msg: "Going to download & use maestro from {{ maestro_rdb_download_url }}"
+    msg: "Going to download & use maestro from {{ maestro_rdb_cli_download_url }}"
 
-- name: Download Maestro Results DB client from {{ maestro_rdb_download_url }}
+- name: Download Maestro Results DB client from {{ maestro_rdb_cli_download_url }}
   tags:
     - maestro
     - download
   get_url:
-    url: "{{ maestro_rdb_download_url }}"
-    dest: "{{ maestro_rdb_download_dest }}/{{ maestro_rdb_download_url | basename}}"
+    url: "{{ maestro_rdb_cli_download_url }}"
+    dest: "{{ maestro_rdb_cli_download_dest }}/{{ maestro_rdb_cli_download_url | basename}}"
     force: yes
     validate_certs: "{{ maestro_download_validate_certs }}"
   register: dist_get
 
-- name: Unzip downloaded distribution to {{ maestro_rdb_install_dest }}
+- name: Unzip downloaded distribution to {{ maestro_rdb_cli_install_dest }}
   tags:
     - maestro
     - unarchive
   unarchive:
-    src: "{{ maestro_rdb_download_dest }}/{{ maestro_rdb_download_url | basename }}"
-    dest: "{{ maestro_rdb_install_dest }}/"
+    src: "{{ maestro_rdb_cli_download_dest }}/{{ maestro_rdb_cli_download_url | basename }}"
+    dest: "{{ maestro_rdb_cli_install_dest }}/"
     remote_src: True
     list_files: yes
   register: archive_contents
@@ -44,13 +44,13 @@
   - maestro
   - link
 
-- name: Create link to maestro results db install dir {{ maestro_rdb_install_dest }}/{{ maestro_rdb_install_link }}
+- name: Create link to maestro results db install dir {{ maestro_rdb_cli_install_dest }}/{{ maestro_rdb_cli_install_link }}
   tags:
     - maestro
     - link
   file:
-    src: "{{ maestro_rdb_install_dest }}/{{ archive_contents.files[0] | dirname | dirname  }}"
-    dest: "{{ maestro_rdb_install_dest }}/{{ maestro_rdb_install_link }}"
+    src: "{{ maestro_rdb_cli_install_dest }}/{{ archive_contents.files[0] | dirname | dirname  }}"
+    dest: "{{ maestro_rdb_cli_install_dest }}/{{ maestro_rdb_cli_install_link }}"
     state: link
     mode: 0755
     owner: "{{ maestro_rdb_user }}"
@@ -83,4 +83,4 @@
   tags:
     - maestro
     - ownership
-  shell: chown -R "{{ maestro_rdb_user }}":"{{ maestro_rdb_user }}" {{ maestro_rdb_install_dest }}/maestro*
+  shell: chown -R "{{ maestro_rdb_user }}":"{{ maestro_rdb_user }}" {{ maestro_rdb_cli_install_dest }}/maestro*
