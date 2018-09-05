@@ -84,3 +84,4 @@
     - maestro
     - ownership
   shell: chown -R "{{ maestro_rdb_user }}":"{{ maestro_rdb_user }}" {{ maestro_rdb_server_install_dest }}/maestro*
+  notify: "restart maestro results server service"
