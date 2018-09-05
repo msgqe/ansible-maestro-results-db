@@ -1,5 +1,7 @@
 ---
-maestro_rdb_dependencies: java-1.8.0-openjdk-devel
+maestro_rdb_cli_dependencies: java-1.8.0-openjdk-devel
+maestro_rdb_server_dependencies: java-1.8.0-openjdk-devel
+
 
 # vars file for ansible-maestro-client
 sdkman_dir: /opt/sdk
